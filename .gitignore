@@ -1,0 +1,49 @@
+signDatabasePublicFramesOnly.zip
+dataset/
+# Python bytecode
+*.pyc
+
+# Weight files
+/darkflow/bin/
+
+# Sample image data
+/darkflow/sample_img/*.jpg
+!sample_img/sample_*.jpg
+/darkflow/sample_img/out/*
+
+# Annotated test results
+/darkflow/results/
+
+# Intermediate training data
+/darkflow/backup/
+/darkflow/tfnet/yolo/parse-history.txt
+/darkflow/tfnet/yolo/*.parsed
+*.txt
+!requirements*.txt
+*.pb
+/profile
+/test.py
+
+# Built cython files
+/darkflow/darkflow/cython_utils/*.pyd
+/darkflow/darkflow/cython_utils/*.c
+
+#egg-info
+/darkflow/darkflow.egg-info/
+
+#Other build stuff
+/darkflow/build/
+
+#TensorBoard logs
+/darkflow/summary/
+
+#Built graphs
+/darkflow/built_graph/
+
+#Training checkpoints
+/darkflow/ckpt/*
+
+#pytest cache
+/darkflow/.cache/
+
+
