@@ -8,7 +8,7 @@ import numpy as np
 import csv
 
 print("Initialisation Done")
-
+# cap = cv2.VideoCapture(0)
 # script_path = os.path.dirname(os.path.realpath(__file__))
 # script_path = os.path.join(script_path,'darkflow')
 options = {"model": "cfg/yolo.cfg", "load": "bin/yolo.weights", "threshold": 0.1,"gpu":0.5}
@@ -31,11 +31,12 @@ print('doing')
 # datadir = '../dataset/vid0/frameAnnotations-vid_cmp2.avi_annotations'
 # dataset = os.listdir(datadir)
 # dataset = [i for i in dataset if '.png' in i]
-predictThresh = 0.8
+predictThresh = 0.5
 # for img in dataset:
 for img in anotations_list:
     img = img.split(';')
     # print(img)
+    # ret,imgcv = cap.read()
     imgcv = cv2.imread(os.path.join('../dataset',img[0]))
     result = tfnet.return_predict(imgcv)
     for box in result:
