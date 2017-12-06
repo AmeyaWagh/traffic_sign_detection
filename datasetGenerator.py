@@ -8,21 +8,60 @@ import shutil
 
 class Parser():
 
-    def __init__(self, path=None):
+    def __init__(self, path=None,percentage=0.7):
         if not os.path.isdir('train'):
             os.mkdir('train')
             os.mkdir('train/images')
             os.mkdir('train/annotations')
+        if not os.path.isdir('test'):
+            os.mkdir('test')
+            os.mkdir('test/images')
+            os.mkdir('test/annotations')    
         self.datasetPath = path
         self.imgPath = './train/images'
         self.annotationsPath = './train/annotations'
         self.labels = set()
+        # print([x if os.path.isdir(x)==True for x in os.listdir('./dataset')])
+        self.LISAdatasetPath = './dataset'
+        self.datasetDirs = []
+        for x in os.listdir(self.LISAdatasetPath):
+            if os.path.isdir(os.path.join(self.LISAdatasetPath,x)) and ("vid" in x):
+                print('>>',x)
+                self.datasetDirs.append(os.path.join(self.LISAdatasetPath,x))
+        sorted(self.datasetDirs)
+        print(self.datasetDirs)
+        self.trainDataLen = int(percentage*len(self.datasetDirs))
+        self.trainDatasetPath = self.datasetDirs[:self.trainDataLen]
+
+        self.testDataLen = len(self.datasetDirs)-self.trainDataLen
+        self.testDatasetPath = self.datasetDirs[self.trainDataLen+1:]
+        print('train >>',self.trainDataLen)
+        print('train >>',self.trainDatasetPath)
+        print('test >>',self.testDataLen)
+        print('test >>',self.testDatasetPath)
+        print('\n\n')
 
     def generateDataset(self):
+        for subdir in self.trainDatasetPath:
+            subdir = os.path.join(subdir,os.listdir(subdir)[0])
+            print('trainset >>',subdir)
+            self.datasetPath=subdir
+            self.generateDatasetFiles()
+
+        for subdir in self.trainDatasetPath:
+            subdir = os.path.join(subdir,os.listdir(subdir)[0])
+            print('testset >>',subdir)
+            self.datasetPath=subdir
+            self.generateDatasetFiles()    
+
+        print(self.labels)
+        self.generateLabels()
+
+    def generateDatasetFiles(self):
         with open(os.path.join(self.datasetPath,'frameAnnotations.csv')) as csvfile:
             anotations_list = csvfile.readlines()
             # print(anotations_list)
-            print(anotations_list.pop(0))
+            anotations_list.pop(0)
             for sample in anotations_list:
                 sample = sample.split(';')
                 # print(sample)
@@ -37,12 +76,11 @@ class Parser():
                 shutil.copy(
                     os.path.join(self.datasetPath,sample[0]),
                     self.imgPath)
-            print(self.labels)
-            self.generateLabels()
+        
                 # break
 
     def generateLabels(self):
-        with open(os.path.join('./train/labels.txt'),'w') as fp:
+        with open(os.path.join('./labels.txt'),'w') as fp:
             for label in self.labels:
                 fp.write(label+'\n')
 
@@ -102,5 +140,6 @@ class Parser():
 
 if __name__ == '__main__':
     gen = Parser(path='./dataset/vid0/frameAnnotations-vid_cmp2.avi_annotations/')
+    # gen = Parser()
     gen.generateDataset()
     # gen.generateXML()
