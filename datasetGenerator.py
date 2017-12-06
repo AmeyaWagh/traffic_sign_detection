@@ -2,6 +2,8 @@ import os
 # import xml.etree.cElementTree as ET
 from lxml import etree as ET
 import inspect
+import csv
+import shutil
 
 
 class Parser():
@@ -15,14 +17,31 @@ class Parser():
         self.imgPath = './train/images'
         self.annotationsPath = './train/annotations'
 
-    def generateDataset():
-        pass
+    def generateDataset(self):
+        with open(os.path.join(self.datasetPath,'frameAnnotations.csv')) as csvfile:
+            anotations_list = csvfile.readlines()
+            # print(anotations_list)
+            print(anotations_list.pop(0))
+            for sample in anotations_list:
+                sample = sample.split(';')
+                print(sample)
+                self.generateXML(file=sample[0],
+                    label=sample[1],
+                    _bndbox={
+                        "xmin": sample[2],
+                        "ymin": sample[3],
+                        "xmax": sample[4],
+                        "ymax": sample[5]})
+                shutil.copy(
+                    os.path.join(self.datasetPath,sample[0]),
+                    self.imgPath)
+                # break
 
     def generateXML(self, folder='VOC2008',
                     file='00002.png',
                     _shape={
-                    "width":10,
-                    "height":10,
+                    "width":704,
+                    "height":480,
                     "depth":3,
                     },
                     label="person",
@@ -68,10 +87,11 @@ class Parser():
         tree = ET.ElementTree(root)
         # print(inspect.getargspec(tree.write))
         tree.write(
-            os.path.join(self.annotationsPath, "filename.xml"),
+            os.path.join(self.annotationsPath, "{}.xml".format(file)),
             pretty_print=True)
 
 
 if __name__ == '__main__':
-    gen = Parser()
-    gen.generateXML()
+    gen = Parser(path='./dataset/vid0/frameAnnotations-vid_cmp2.avi_annotations/')
+    gen.generateDataset()
+    # gen.generateXML()
