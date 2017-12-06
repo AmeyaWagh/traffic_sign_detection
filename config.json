@@ -1,0 +1,9 @@
+{
+	"yoloConfig":{
+		"model": "cfg/yolo.cfg", 
+		"load": "bin/yolo.weights", 
+		"threshold": 0.5,
+		"gpu":0.7
+	},
+	"dataset":"./dataset"	
+}
