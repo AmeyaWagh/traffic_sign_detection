@@ -16,6 +16,7 @@ class Parser():
         self.datasetPath = path
         self.imgPath = './train/images'
         self.annotationsPath = './train/annotations'
+        self.labels = set()
 
     def generateDataset(self):
         with open(os.path.join(self.datasetPath,'frameAnnotations.csv')) as csvfile:
@@ -24,7 +25,8 @@ class Parser():
             print(anotations_list.pop(0))
             for sample in anotations_list:
                 sample = sample.split(';')
-                print(sample)
+                # print(sample)
+                self.labels.add(sample[1])
                 self.generateXML(file=sample[0],
                     label=sample[1],
                     _bndbox={
@@ -35,7 +37,14 @@ class Parser():
                 shutil.copy(
                     os.path.join(self.datasetPath,sample[0]),
                     self.imgPath)
+            print(self.labels)
+            self.generateLabels()
                 # break
+
+    def generateLabels(self):
+        with open(os.path.join('./train/labels.txt'),'w') as fp:
+            for label in self.labels:
+                fp.write(label+'\n')
 
     def generateXML(self, folder='VOC2008',
                     file='00002.png',
