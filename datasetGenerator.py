@@ -42,17 +42,27 @@ class Parser():
         print('\n\n')
 
     def generateDataset(self):
+        # generate training dataset
+        self.FileSequence = []
+        self.imgPath = './train/images'
+        self.annotationsPath = './train/annotations'
         for subdir in self.trainDatasetPath:
             subdir = os.path.join(subdir,os.listdir(subdir)[0])
             print('trainset >>',subdir)
             self.datasetPath=subdir
             self.generateDatasetFiles()
+        self.generateFileSequence('./train')    
 
+        # generate testing dataset
+        self.FileSequence = []
+        self.imgPath = './test/images'
+        self.annotationsPath = './test/annotations'
         for subdir in self.trainDatasetPath:
             subdir = os.path.join(subdir,os.listdir(subdir)[0])
             print('testset >>',subdir)
             self.datasetPath=subdir
             self.generateDatasetFiles()    
+        self.generateFileSequence('./test')    
 
         print(self.labels)
         self.generateLabels()
@@ -76,8 +86,14 @@ class Parser():
                 shutil.copy(
                     os.path.join(self.datasetPath,sample[0]),
                     self.imgPath)
+                self.FileSequence.append(sample[0])
         
                 # break
+
+    def generateFileSequence(self,filePath):
+        with open(os.path.join(filePath,'FileSequence.txt'),'w') as fp:
+            for _file in self.FileSequence:
+                fp.write(_file+'\n')
 
     def generateLabels(self):
         with open(os.path.join('./labels.txt'),'w') as fp:

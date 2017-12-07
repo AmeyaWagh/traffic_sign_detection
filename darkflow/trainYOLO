@@ -1,0 +1,2 @@
+#!/bin/bash
+./flow --model cfg/tiny-yolo-voc27.cfg --load bin/tiny-yolo-voc.weights --train --gpu 0.7 --annotation ../train/annotations/ --dataset ../train/images/ --labels ../labels.txt
