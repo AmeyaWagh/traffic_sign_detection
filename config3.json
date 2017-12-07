@@ -1,0 +1,9 @@
+{
+	"yoloConfig":{
+		"pbLoad": "./built_graph/tiny-yolo-voc27.pb", 
+		"metaLoad": "./built_graph/tiny-yolo-voc27.meta",
+		"labels":"../labels.txt", 
+		"gpu":0.7
+	},
+	"dataset":"./dataset"	
+}

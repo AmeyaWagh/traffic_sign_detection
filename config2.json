@@ -1,7 +1,7 @@
 {
 	"yoloConfig":{
-		"model": "../cfg/tiny-yolo-voc27.cfg", 
-		"load": "../bin/tiny-yolo-voc.weights",
+		"model": "./cfg/tiny-yolo-voc27.cfg", 
+		"load": "./bin/tiny-yolo-voc.weights",
 		"labels":"../labels.txt", 
 		"gpu":0.7
 	},

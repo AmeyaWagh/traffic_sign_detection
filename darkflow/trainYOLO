@@ -1,2 +1,3 @@
 #!/bin/bash
-./flow --model ../cfg/tiny-yolo-voc27.cfg --load ../bin/tiny-yolo-voc.weights --train --gpu 1.0 --annotation ../train/annotations/ --dataset ../train/images/ --labels ../labels.txt
+#./flow --model ../cfg/tiny-yolo-voc27.cfg --load ../bin/tiny-yolo-voc.weights --train --gpu 1.0 --annotation ../train/annotations/ --dataset ../train/images/ --labels ../labels.txt
+./flow --model cfg/tiny-yolo-voc27.cfg --load -1  --train --annotation train/annotations/ --dataset train/images/ --labels ../labels.txt --gpu 1.0 --epoch 6 --savepb

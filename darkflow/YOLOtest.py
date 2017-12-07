@@ -10,7 +10,7 @@ import json
 
 class objectDetector():
     def __init__(self,video=False):
-        self.config = json.load(open('../config2.json'))
+        self.config = json.load(open('../config3.json'))
         self.video=video
         print(self.config)
         self.options = self.config['yoloConfig']
@@ -57,6 +57,7 @@ class objectDetector():
                 else:
                     imgcv = cv2.imread(os.path.join('../test/images',img[0]))
                 result = self.tfnet.return_predict(imgcv)
+                print(result)
                 imgcv = self.drawBoundingBox(imgcv,result)        
                 cv2.imshow('detected objects',imgcv)
                 if cv2.waitKey(10) == ord('q'):
