@@ -57,7 +57,7 @@ class Parser():
         self.FileSequence = []
         self.imgPath = './test/images'
         self.annotationsPath = './test/annotations'
-        for subdir in self.trainDatasetPath:
+        for subdir in self.testDatasetPath:
             subdir = os.path.join(subdir,os.listdir(subdir)[0])
             print('testset >>',subdir)
             self.datasetPath=subdir

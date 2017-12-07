@@ -15,14 +15,14 @@ class objectDetector():
         print(self.config)
         self.options = self.config['yoloConfig']
         self.tfnet = TFNet(self.options)
-        self.predictThresh = 0.4
+        self.predictThresh = 0.1
         self.getAnnotations()
         print(self.anotations_list)
         if self.video:
             self.cap = cv2.VideoCapture(0)
 
     def getAnnotations(self):
-        with open('../test/FileSequence.txt') as seqFile:
+        with open('./train/FileSequence.txt') as seqFile:
             self.anotations_list = seqFile.readlines()
         self.anotations_list = [seq.split('\n')[0] for seq in self.anotations_list]    
 
@@ -55,12 +55,12 @@ class objectDetector():
                 if self.video:
                     ret,imgcv = self.cap.read()
                 else:
-                    imgcv = cv2.imread(os.path.join('../test/images',img[0]))
+                    imgcv = cv2.imread(os.path.join('./train/images',img[0]))
                 result = self.tfnet.return_predict(imgcv)
                 print(result)
                 imgcv = self.drawBoundingBox(imgcv,result)        
                 cv2.imshow('detected objects',imgcv)
-                if cv2.waitKey(10) == ord('q'):
+                if cv2.waitKey(50) == ord('q'):
                     print('exitting loop')
                     break
         except KeyboardInterrupt:
