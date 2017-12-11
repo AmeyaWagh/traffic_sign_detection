@@ -8,7 +8,7 @@ import shutil
 
 class Parser():
 
-    def __init__(self, path=None,percentage=0.7):
+    def __init__(self, path=None,percentage=1.0):
         if not os.path.isdir('train'):
             os.mkdir('train')
             os.mkdir('train/images')
