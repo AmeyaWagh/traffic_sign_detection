@@ -2,6 +2,7 @@ signDatabasePublicFramesOnly.zip
 dataset/
 # Python bytecode
 *.pyc
+*.so
 
 # Weight files
 /darkflow/bin/
