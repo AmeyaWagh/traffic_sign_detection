@@ -98,7 +98,7 @@ class objectDetector():
                     print('\n\nprocessing >> ',img[0],)
                     imgcv = cv2.imread(os.path.join('../train/images',img[0]))
                     # imgcv = cv2.imread(os.path.join('./pittsburgh/images',img[0]))
-                    self.getlabel(os.path.join('./train/annotations',img[0]+".xml"))
+                    # self.getlabel(os.path.join('./train/annotations',img[0]+".xml"))
                     result = self.tfnet.return_predict(imgcv)
                     # print(result[0]["label"],img[0])
                     imgcv = self.drawBoundingBox(imgcv,result)        

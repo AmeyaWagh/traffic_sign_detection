@@ -7,9 +7,9 @@ Real-time object detection and classification. Paper: [version 1](https://arxiv.
 Read more about YOLO (in darknet) and download weight files [here](http://pjreddie.com/darknet/yolo/). In case the weight file cannot be found, I uploaded some of mine [here](https://drive.google.com/drive/folders/0B1tW_VtY7onidEwyQ2FtQVplWEU), which include `yolo-full` and `yolo-tiny` of v1.0, `tiny-yolo-v1.1` of v1.1 and `yolo`, `tiny-yolo-voc` of v2.
 
 
-Click on this image to see demo from yolov2:
+See demo below or see on [this imgur](http://i.imgur.com/EyZZKAA.gif)
 
-[![img](preview.png)](http://i.imgur.com/EyZZKAA.gif)
+<p align="center"> <img src="demo.gif"/> </p>
 
 ## Dependencies
 
@@ -88,14 +88,14 @@ flow --h
 First, let's take a closer look at one of a very useful option `--load`
 
 ```bash
-# 1. Load yolo-tiny.weights
-flow --model cfg/yolo-tiny.cfg --load bin/yolo-tiny.weights
+# 1. Load tiny-yolo.weights
+flow --model cfg/tiny-yolo.cfg --load bin/tiny-yolo.weights
 
 # 2. To completely initialize a model, leave the --load option
 flow --model cfg/yolo-new.cfg
 
 # 3. It is useful to reuse the first identical layers of tiny for `yolo-new`
-flow --model cfg/yolo-new.cfg --load bin/yolo-tiny.weights
+flow --model cfg/yolo-new.cfg --load bin/tiny-yolo.weights
 # this will print out which layers are reused, which are initialized
 ```
 
@@ -103,12 +103,12 @@ All input images from default folder `sample_img/` are flowed through the net an
 
 ```bash
 # Forward all images in sample_img/ using tiny yolo and 100% GPU usage
-flow --imgdir sample_img/ --model cfg/yolo-tiny.cfg --load bin/yolo-tiny.weights --gpu 1.0
+flow --imgdir sample_img/ --model cfg/tiny-yolo.cfg --load bin/tiny-yolo.weights --gpu 1.0
 ```
 json output can be generated with descriptions of the pixel location of each bounding box and the pixel location. Each prediction is stored in the `sample_img/out` folder by default. An example json array is shown below.
 ```bash
 # Forward all images in sample_img/ using tiny yolo and JSON output.
-flow --imgdir sample_img/ --model cfg/yolo-tiny.cfg --load bin/yolo-tiny.weights --json
+flow --imgdir sample_img/ --model cfg/tiny-yolo.cfg --load bin/tiny-yolo.weights --json
 ```
 JSON output:
 ```json
@@ -127,7 +127,7 @@ Training is simple as you only have to add option `--train`. Training set and an
 
 ```bash
 # Initialize yolo-new from yolo-tiny, then train the net on 100% GPU:
-flow --model cfg/yolo-new.cfg --load bin/yolo-tiny.weights --train --gpu 1.0
+flow --model cfg/yolo-new.cfg --load bin/tiny-yolo.weights --train --gpu 1.0
 
 # Completely initialize yolo-new and train it with ADAM optimizer
 flow --model cfg/yolo-new.cfg --train --trainer adam
@@ -143,7 +143,7 @@ flow --train --model cfg/yolo-new.cfg --load -1
 flow --model cfg/yolo-new.cfg --load 1500
 
 # Fine tuning yolo-tiny from the original one
-flow --train --model cfg/yolo-tiny.cfg --load bin/yolo-tiny.weights
+flow --train --model cfg/tiny-yolo.cfg --load bin/tiny-yolo.weights
 ```
 
 Example of training on Pascal VOC 2007:
@@ -248,7 +248,7 @@ options = {"model": "cfg/yolo.cfg", "load": "bin/yolo.weights", "threshold": 0.1
 
 tfnet = TFNet(options)
 
-imgcv = cv2.imread("./sample_img/dog.jpg")
+imgcv = cv2.imread("./sample_img/sample_dog.jpg")
 result = tfnet.return_predict(imgcv)
 print(result)
 ```

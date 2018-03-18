@@ -48,7 +48,11 @@ def train(self):
         feed_dict[self.inp] = x_batch
         feed_dict.update(self.feed)
 
-        fetches = [self.train_op, loss_op, self.summary_op] 
+        fetches = [self.train_op, loss_op]
+
+        if self.FLAGS.summary:
+            fetches.append(self.summary_op)
+
         fetched = self.sess.run(fetches, feed_dict)
         loss = fetched[1]
 
@@ -56,7 +60,8 @@ def train(self):
         loss_mva = .9 * loss_mva + .1 * loss
         step_now = self.FLAGS.load + i + 1
 
-        self.writer.add_summary(fetched[2], step_now)
+        if self.FLAGS.summary:
+            self.writer.add_summary(fetched[2], step_now)
 
         form = 'step {} - loss {} - moving ave loss {}'
         self.say(form.format(step_now, loss, loss_mva))
@@ -115,15 +120,10 @@ def predict(self):
         to_idx = min(from_idx + batch, len(all_inps))
 
         # collect images input in the batch
-        inp_feed = list(); new_all = list()
         this_batch = all_inps[from_idx:to_idx]
-        for inp in this_batch:
-            new_all += [inp]
-            this_inp = os.path.join(inp_path, inp)
-            this_inp = self.framework.preprocess(this_inp)
-            expanded = np.expand_dims(this_inp, 0)
-            inp_feed.append(expanded)
-        this_batch = new_all
+        inp_feed = pool.map(lambda inp: (
+            np.expand_dims(self.framework.preprocess(
+                os.path.join(inp_path, inp)), 0)), this_batch)
 
         # Feed to the net
         feed_dict = {self.inp : np.concatenate(inp_feed, 0)}    
