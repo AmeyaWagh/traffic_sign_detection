@@ -1,9 +1,0 @@
-# Traffic_sign_detection_YOLO
-Detecting traffic signs using YOLO algorithm
-[![IMAGE ALT TEXT HERE](resources/frame219.png)](https://drive.google.com/file/d/1nxinxEmpOO59KKDkXPgXayNqtq88a_ym/view)
-
-1)Clone the repo
-2) build cython extension
-3) build globall with "pip install ."
-4) check if "flow" works with "flow --h"
-5)
