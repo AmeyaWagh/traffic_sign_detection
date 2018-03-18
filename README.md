@@ -1,6 +1,6 @@
 # Traffic_sign_detection_YOLO
 Detecting traffic signs using YOLO algorithm
-[![IMAGE ALT TEXT HERE](resources/yolo.gif)](https://drive.google.com/file/d/1nxinxEmpOO59KKDkXPgXayNqtq88a_ym/view)
+[![IMAGE ALT TEXT HERE](resources/yolo.gif)]()
 
 
 #### Clone the repository
@@ -10,6 +10,7 @@ git clone https://github.com/AmeyaWagh/Traffic_sign_detection_YOLO.git
 
 #### Goto darkflow and build cython extension by running
 ```shell
+cd darkflow
 python3 setup.py build_ext --inplace
 ```
 
@@ -55,7 +56,12 @@ mkdir built_graph
 ```
 
 #### Run YOLO
-```
+```shell
 ./runYOLO
 ``` 
 
+#### Training
+```shell
+cd darkflow
+./trainYOLO
+```
