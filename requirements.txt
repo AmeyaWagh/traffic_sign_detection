@@ -1,0 +1,3 @@
+opencv-python
+numpy
+pytorch-lightning==2.0.7
